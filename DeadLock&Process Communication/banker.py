@@ -3,30 +3,25 @@
 # 2. import numpy
 #    matrix = numpy.empty((10, 10))
 
-'''
-5
-P0 P1 P2 P3 P4
-3
-A B C
-0 1 0
-2 0 0
-3 0 2
-2 1 1
-0 0 2
-2 1 3
-3 2 2
-4 0 2
-2 2 2
-2 3 3
-1 0 1
-'''
-
+Allocation = []
+Max = []
+Need = []
+print("请输入进程数目")
 m = int(input())
+print("请输入各进程名称")
 Proc = input().strip().split()
+print("请输入资源种类数目")
 n = int(input())
+print("请输入各资源名称")
 Res = input().strip().split()
-Allocation = [list(map(int, input().strip().split())) for i in range(m)]
+print("顺序输入为已为各进程分配的各个资源数目")
+for i in range(m):
+    res = input().strip().split()
+    res = [int(i) for i in res]
+    Allocation.append(res)
+print("输入进程所需最大的各个资源数目")
 Max = [list(map(int, input().strip().split())) for i in range(m)]
+print("输入各个资源剩余可用数目")
 Available = list(map(int, input().strip().split()))
 Need = [[Max[i][j] - Allocation[i][j] for j in range(n)] for i in range(m)]
 
@@ -34,7 +29,7 @@ Need = [[Max[i][j] - Allocation[i][j] for j in range(n)] for i in range(m)]
 Proc = [p1,p2,p3,p4,p5]
 Res =  [A,B,C,D]
 All = [5][4]
-Avail = [4]
+Avail = [4] 5
 Max = [5][4]
 Need = [5][4]
 """
@@ -44,21 +39,21 @@ if __name__ == "__main__":
     for k in  range(len(Proc)):
         for i in range(len(Proc)):
             if Proc[i] not in safe_seq:
-                flag = 1
+                secure = 1
                 #　若 Need > Available
                 #　无法添加到安全序列
                 for j in range(len(Res)):
-                    if(Need[i][j] > Available[j]):
-                        flag = 0
+                    if (Need[i][j] > Available[j]):
+                        secure = 0
                         break
-                # 否则 Avail += Allocation
+                # 否 Avail += Allocation
                 # 更新可用资源
-                if flag:
+                if secure:
                     for j in range(len(Res)):
                         Available[j] += Allocation[i][j]
                     safe_seq.append(Proc[i])
     if (len(safe_seq) != len(Proc)):
-        print("不存在安全序列,以下不能被执行：")
+        print("不存在安全序列,以下进程不能被执行：")
         cant = [item for item in Proc if item not in safe_seq]
         print(cant)
     else:
